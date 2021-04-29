@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1S3-eL-abf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wI7-dp-imM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -8,6 +8,72 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Project List View Controller-->
+        <scene sceneID="PFq-PR-Psr">
+            <objects>
+                <viewController id="Lyo-YT-1kS" customClass="ProjectListViewController" customModule="Task_CoreData" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LUi-j8-anx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f8L-U3-ZbN">
+                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="projectCell" id="b5K-xr-w63">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b5K-xr-w63" id="R6M-Gv-07U">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="apl-x2-Ccv" kind="show" identifier="toTaskListVC" id="NkN-Np-hM2"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Nth-Ri-wdH">
+                                <rect key="frame" x="75" y="92" width="264" height="92"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter task here..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QUd-oN-THB">
+                                        <rect key="frame" x="0.0" y="0.0" width="264" height="58"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcC-er-EbG">
+                                        <rect key="frame" x="0.0" y="62" width="264" height="30"/>
+                                        <state key="normal" title="Create New Project"/>
+                                        <connections>
+                                            <action selector="createNewProjectButtonTapped:" destination="Lyo-YT-1kS" eventType="touchUpInside" id="zMR-Gw-PDV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WYF-wW-krk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="f8L-U3-ZbN" firstAttribute="leading" secondItem="WYF-wW-krk" secondAttribute="leading" id="8Z6-2U-dAP"/>
+                            <constraint firstItem="Nth-Ri-wdH" firstAttribute="leading" secondItem="WYF-wW-krk" secondAttribute="leading" constant="75" id="D5N-MZ-cw4"/>
+                            <constraint firstItem="f8L-U3-ZbN" firstAttribute="top" secondItem="WYF-wW-krk" secondAttribute="top" constant="100" id="F6G-Te-amo"/>
+                            <constraint firstItem="Nth-Ri-wdH" firstAttribute="top" secondItem="WYF-wW-krk" secondAttribute="top" constant="4" id="JBt-pZ-htO"/>
+                            <constraint firstItem="WYF-wW-krk" firstAttribute="trailing" secondItem="Nth-Ri-wdH" secondAttribute="trailing" constant="75" id="PxB-Ri-STS"/>
+                            <constraint firstItem="WYF-wW-krk" firstAttribute="trailing" secondItem="f8L-U3-ZbN" secondAttribute="trailing" id="VJs-fu-O0M"/>
+                            <constraint firstItem="WYF-wW-krk" firstAttribute="bottom" secondItem="f8L-U3-ZbN" secondAttribute="bottom" id="ZPC-KS-150"/>
+                            <constraint firstItem="f8L-U3-ZbN" firstAttribute="top" secondItem="Nth-Ri-wdH" secondAttribute="bottom" constant="4" id="e5z-ma-JXj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="gi9-Ho-2N8"/>
+                    <connections>
+                        <outlet property="projectNameTextField" destination="QUd-oN-THB" id="qh4-bS-l2U"/>
+                        <outlet property="tableView" destination="f8L-U3-ZbN" id="ZQ0-T0-12c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h9W-TK-1dc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1465" y="-2"/>
+        </scene>
         <!--Task List Table View Controller-->
         <scene sceneID="8jh-6r-o9n">
             <objects>
@@ -90,7 +156,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hcn-C0-7Av" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="505.79710144927537" y="-1.3392857142857142"/>
+            <point key="canvasLocation" x="2324.6376811594205" y="-1.3392857142857142"/>
         </scene>
         <!--Task Detail View Controller-->
         <scene sceneID="art-cP-Wgv">
@@ -150,25 +216,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l97-BF-A1X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1350.7246376811595" y="-2.0089285714285712"/>
+            <point key="canvasLocation" x="3171.0144927536235" y="-2.0089285714285712"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="zll-H0-jCU">
+        <scene sceneID="4nt-7j-wK0">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1S3-eL-abf" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wI7-dp-imM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="quN-Ff-yGK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3bn-83-ocv">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="apl-x2-Ccv" kind="relationship" relationship="rootViewController" id="Jur-k6-MfF"/>
+                        <segue destination="Lyo-YT-1kS" kind="relationship" relationship="rootViewController" id="Rem-67-Vnc"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qI2-2u-Bgb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rnb-ZR-43M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-404.34782608695656" y="-1.3392857142857142"/>
+            <point key="canvasLocation" x="658" y="-2"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

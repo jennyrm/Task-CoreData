@@ -8,46 +8,26 @@
 import CoreData
 
 class TaskController {
-    //MARK: - Properties
-    static let shared = TaskController()
-    
-    var tasks = [Task]()
-    
-    private lazy var fetchRequest: NSFetchRequest<Task> = {
-        let request = NSFetchRequest<Task>(entityName: "Task")
-        request.predicate = NSPredicate(value: true)
-        return request
-    }()
-    
-    private init() {}
-    
     //MARK: - CRUD
-    func createTaskWith(name: String, notes: String?, dueDate: Date?) {
-        let newTask = Task(name: name, notes: notes, dueDate: dueDate)
-        tasks.append(newTask)
-        CoreDataStack.saveContext()
+    static func createTaskWith(project: Project, name: String, notes: String?, dueDate: Date? ) {
+        let newTask = Task(project: project, name: name, notes: notes, dueDate: dueDate)
+        ProjectController.shared.addTaskTo(project: project, task: newTask)
     }
     
-    func fetchTasks() {
-        let tasks = (try? CoreDataStack.context.fetch(self.fetchRequest)) ?? []
-        self.tasks = tasks
-    }
-    
-    func update(task: Task, name: String, notes: String?, dueDate: Date?) {
+    static func update(task: Task, name: String, notes: String?, dueDate: Date?) {
         task.name = name
         task.notes = notes
         task.dueDate = dueDate
-        CoreDataStack.saveContext()
     }
     
-    func deleteTask(task: Task) {
-        CoreDataStack.context.delete(task)
-        CoreDataStack.saveContext()
-    }
+//    static func deleteTask(task: Task) {
+//        if let index = tasks.firstIndex(of: task) {
+//            tasks.remove(at: index)
+//        }
+//    }
     
-    func toggleIsComplete(task: Task) {
+    static func toggleIsComplete(task: Task) {
         task.isComplete.toggle()
-        CoreDataStack.saveContext()
     }
     
 }//End of class

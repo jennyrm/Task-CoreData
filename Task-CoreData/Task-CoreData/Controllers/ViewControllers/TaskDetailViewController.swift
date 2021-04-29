@@ -21,18 +21,20 @@ class TaskDetailViewController: UIViewController {
     }
     
     //MARK: - Properties
+    var project: Project?
     var task: Task?
     var date: Date?
     
     //MARK: - Actions
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         guard let taskName = taskNameTextField.text, !taskName.isEmpty,
-              //jennyrm - ASK
-              let taskNotes = taskNotesTextView.text else { return }
+              let taskNotes = taskNotesTextView.text,
+              let project = project else { return }
         if let task = task {
-            TaskController.shared.update(task: task, name: taskName, notes: taskNotes, dueDate: date)
+//            TaskController.shared.update(task: task, name: taskName, notes: taskNotes, dueDate: date)
+            print("unfinished")
         } else {
-            TaskController.shared.createTaskWith(name: taskName, notes: taskNotes, dueDate: date)
+            TaskController.createTaskWith(project: project, name: taskName, notes: taskNotes, dueDate: date)
         }
         navigationController?.popViewController(animated: true)
     }

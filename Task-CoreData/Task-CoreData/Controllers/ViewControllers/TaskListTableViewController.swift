@@ -8,7 +8,7 @@
 import UIKit
 
 class TaskListTableViewController: UITableViewController {
-
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,42 +17,46 @@ class TaskListTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        TaskController.shared.fetchTasks()
+        ProjectController.shared.fetchTasks()
         tableView.reloadData()
     }
-
+    
+    //MARK: - Properties
+    var project: Project?
+    
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TaskController.shared.tasks.count
+        return project?.toTasks?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as? TaskTableViewCell else { return UITableViewCell() }
-        let task = TaskController.shared.tasks[indexPath.row]
-        cell.task = task
-        cell.delegate = self
+        let taskArr = (project?.toTasks)?.allObjects
+        let task = taskArr?[indexPath.row]
+        cell.task = task as? Task
+//        cell.delegate = self
         return cell
     }
-
-    /*
-    // Override to support editing the table view.
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }  
     }
-    */
-
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //IIDO
+        let project = self.project
+        guard let destinationVC = segue.destination as? TaskDetailViewController else { return }
+        destinationVC.project = project
+        
         if segue.identifier == "toTaskDetailVC" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 guard let destinationVC = segue.destination as? TaskDetailViewController else { return }
-                let taskToSend = TaskController.shared.tasks[indexPath.row]
+                let taskArr = (project?.toTasks)?.allObjects
+                let taskToSend = taskArr?[indexPath.row] as? Task
                 destinationVC.task = taskToSend
             }
         }
@@ -62,7 +66,7 @@ class TaskListTableViewController: UITableViewController {
 extension TaskListTableViewController: TaskCompletionDelegate {
     func taskCellButtonTapped(_ sender: TaskTableViewCell) {
         guard let task = sender.task else { return }
-        TaskController.shared.toggleIsComplete(task: task)
+        TaskController.toggleIsComplete(task: task)
         sender.updateViews()
     }
 }//End of extension
